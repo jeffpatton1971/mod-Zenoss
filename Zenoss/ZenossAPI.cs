@@ -146,8 +146,6 @@
             JArray jData = new JArray();
             jData.Add(jPayload);
 
-            List<zenObjects.zenDevice> zDevices = (List<zenObjects.zenDevice>)JsonConvert.DeserializeObject(router_request(endpoint, router, method, jData.ToString()), typeof(List<zenObjects.zenDevice>));
-
             return JObject.Parse(router_request(endpoint, router, method, jData.ToString())) as JObject;
         }
         /// <summary>
