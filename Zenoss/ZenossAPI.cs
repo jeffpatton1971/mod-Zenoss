@@ -327,7 +327,20 @@
                 jSort,
                 new JProperty("params", new JObject(
                     jSeverity,
-                    jEventState)));
+                    jEventState)),
+                new JProperty("keys", new JArray(
+                    "eventState",
+                    "severity",
+                    "device",
+                    "component",
+                    "eventClass",
+                    "summary",
+                    "firstTime",
+                    "lastTime",
+                    "count",
+                    "evid",
+                    "eventClassKey",
+                    "message")));
             JArray jRequest = new JArray();
             jRequest.Add(jPayload);
 
