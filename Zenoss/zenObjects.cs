@@ -5,7 +5,7 @@
     /// <summary>
     /// A collection of json object for working with Zenoss
     /// </summary>
-    public class zenObjects
+    class zenObjects
     {
         [JsonObject(MemberSerialization.OptIn)]
         public class Info

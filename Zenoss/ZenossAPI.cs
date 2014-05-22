@@ -10,47 +10,16 @@
     /// <summary>
     /// A collection of functions to facilitate working with Zenoss in .NET projects
     /// </summary>
-    public class CookieAwareWebClient : WebClient
-    {
-        private readonly CookieContainer m_container = new CookieContainer();
-        protected override WebRequest GetWebRequest(Uri address)
-        {
-            WebRequest request = base.GetWebRequest(address);
-            HttpWebRequest webRequest = request as HttpWebRequest;
-            if (webRequest != null)
-            {
-                webRequest.CookieContainer = m_container;
-            }
-            return request;
-        }
-    }
-    /// <summary>
-    /// A collection of routers
-    /// </summary>
-    public class Routers
-    {
-        public const string MessagingRouter = "messaging";
-        public const string EventsRouter = "evconsole";
-        public const string ProcessRouter = "process";
-        public const string ServiceRouter = "service";
-        public const string DeviceRouter = "device";
-        public const string NetworkRouter = "network";
-        public const string TemplateRouter = "template";
-        public const string DetailNavRouter = "detailnav";
-        public const string ReportRouter = "report";
-        public const string MibRouter = "mib";
-        public const string ZenPackRouter = "zenpack";
-    }
     public class ZenossAPI
     {
-        public static string host = null;
-        public static CookieAwareWebClient client = new CookieAwareWebClient();
-        public static int req_count = 0;
+        static string host = null;
+        static CookieAwareWebClient client = new CookieAwareWebClient();
+        static int req_count = 0;
         /// <summary>
         /// A hashtable of routers
         /// </summary>
         /// <returns>A Hashtable object</returns>
-        public static Hashtable GetRouters()
+        private static Hashtable GetRouters()
         {
             Hashtable routerTable = new Hashtable();
 
@@ -346,5 +315,37 @@
 
             return JObject.Parse(RouterRequest(endpoint, router, method, jRequest.ToString()))["result"] as JObject;
         }
+        private class CookieAwareWebClient : WebClient
+        {
+            private readonly CookieContainer m_container = new CookieContainer();
+            protected override WebRequest GetWebRequest(Uri address)
+            {
+                WebRequest request = base.GetWebRequest(address);
+                HttpWebRequest webRequest = request as HttpWebRequest;
+                if (webRequest != null)
+                {
+                    webRequest.CookieContainer = m_container;
+                }
+                return request;
+            }
+        }
+        /// <summary>
+        /// A collection of routers
+        /// </summary>
+        private class Routers
+        {
+            public const string MessagingRouter = "messaging";
+            public const string EventsRouter = "evconsole";
+            public const string ProcessRouter = "process";
+            public const string ServiceRouter = "service";
+            public const string DeviceRouter = "device";
+            public const string NetworkRouter = "network";
+            public const string TemplateRouter = "template";
+            public const string DetailNavRouter = "detailnav";
+            public const string ReportRouter = "report";
+            public const string MibRouter = "mib";
+            public const string ZenPackRouter = "zenpack";
+        }
+
     }
 }
