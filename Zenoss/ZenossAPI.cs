@@ -305,6 +305,8 @@
         /// <param name="limit">How many events to return</param>
         /// <param name="component">What component on the device created the event</param>
         /// <param name="eventClass">The event class</param>
+        /// <param name="severity"></param>
+        /// <param name="eventState"></param>
         /// <returns>A JSON object</returns>
         public static JObject get_events(string device_name = "", int limit = 100, string component = "", string eventClass = "", string severity = "", string eventState = "")
         {
