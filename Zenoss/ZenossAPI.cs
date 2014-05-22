@@ -306,7 +306,7 @@
         /// <param name="component">What component on the device created the event</param>
         /// <param name="eventClass">The event class</param>
         /// <returns>A JSON object</returns>
-        public static JObject get_events(string device_name = "", int limit = 100, string component = "", string eventClass = "")
+        public static JObject get_events(string device_name = "", int limit = 100, string component = "", string eventClass = "", string severity = "", string eventState = "")
         {
             string endpoint = "/zport/dmd/Events";
             string router = "EventsRouter";
@@ -317,14 +317,17 @@
             JProperty jDir = new JProperty("dir", "DESC");
             JProperty jSort = new JProperty("sort", "severity");
 
-            JProperty jSeverity = new JProperty("severity", "[5,4,3,2]");
-            JProperty jEventState = new JProperty("eventState", "[0,1]");
+            JProperty jSeverity = new JProperty("severity", severity);
+            JProperty jEventState = new JProperty("eventState", eventState);
 
             JObject jPayload = new JObject(
                 jStart,
                 jLimit,
                 jDir,
-                jSort);
+                jSort,
+                new JProperty("params", new JObject(
+                    jSeverity,
+                    jEventState)));
             JArray jRequest = new JArray();
             jRequest.Add(jPayload);
 
