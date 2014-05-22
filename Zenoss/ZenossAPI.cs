@@ -7,9 +7,6 @@
     using System.Linq;
     using System.Net;
     using System.Text;
-    /// <summary>
-    /// A collection of functions to facilitate working with Zenoss in .NET projects
-    /// </summary>
     public class ZenossAPI
     {
         static string host = null;
@@ -315,6 +312,9 @@
 
             return JObject.Parse(RouterRequest(endpoint, router, method, jRequest.ToString()))["result"] as JObject;
         }
+        /// <summary>
+        /// Extend the WebClient class to accept cookies
+        /// </summary>
         private class CookieAwareWebClient : WebClient
         {
             private readonly CookieContainer m_container = new CookieContainer();
@@ -346,6 +346,5 @@
             public const string MibRouter = "mib";
             public const string ZenPackRouter = "zenpack";
         }
-
     }
 }
