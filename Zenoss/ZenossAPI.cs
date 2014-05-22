@@ -1,14 +1,17 @@
 ﻿namespace Zenoss
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Specialized;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Net;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Collections.Specialized;
+    using System.Linq;
+    using System.Net;
+    using System.Text;
+    /// <summary>
+    /// A collection of functions to facilitate working with Zenoss in .NET projects
+    /// </summary>
     public class CookieAwareWebClient : WebClient
     {
         private readonly CookieContainer m_container = new CookieContainer();
@@ -23,6 +26,9 @@
             return request;
         }
     }
+    /// <summary>
+    /// A collection of routers
+    /// </summary>
     public class Routers
     {
         public const string MessagingRouter = "messaging";
@@ -42,6 +48,10 @@
         public static string host = null;
         public static CookieAwareWebClient client = new CookieAwareWebClient();
         public static int req_count = 0;
+        /// <summary>
+        /// A hashtable of routers
+        /// </summary>
+        /// <returns>A Hashtable object</returns>
         public static Hashtable GetRouters()
         {
             Hashtable routerTable = new Hashtable();
@@ -60,11 +70,18 @@
 
             return routerTable;
         }
-        public static void connect(string host, string username, string password)
+        /// <summary>
+        /// A function to handle authenticating to a Zenoss server
+        /// </summary>
+        /// <param name="Credential">A NetworkCredential object that contains the username and password to conenct as</param>
+        /// <param name="zenServer">A string containing the name of the server to auth to</param>
+        public static void connect(NetworkCredential Credential, string zenServer)
         {
             string authPath = "/zport/acl_users/cookieAuthHelper/login";
             string came_from = "/zport/dmd/";
-            ZenossAPI.host = host;
+            string username = Credential.UserName;
+            string password = Credential.Password;
+            ZenossAPI.host = zenServer;
             ZenossAPI.req_count = ZenossAPI.req_count + 1;
 
             NameValueCollection login_params = new NameValueCollection { 
@@ -76,6 +93,15 @@
 
             client.UploadValues(host + authPath, "POST", login_params);
         }
+        /// <summary>
+        /// This function builds the actual URL and connection to retrieve data from
+        /// or send data to a Zenoss server.
+        /// </summary>
+        /// <param name="endpoint">The location of where the data is stored</param>
+        /// <param name="router">Represents what we are trying to get at</param>
+        /// <param name="method">What method are we accessing to perform our action</param>
+        /// <param name="data">A JSON string that contains the data</param>
+        /// <returns>A JSON string</returns>
         public static string router_request(string endpoint, string router, string method, string data = null)
         {
             Hashtable routerLookup = GetRouters();
@@ -103,6 +129,11 @@
             byte[] restReturn = client.UploadData(apiUrl, Encoding.Default.GetBytes(jPost.ToString()));
             return Encoding.ASCII.GetString(restReturn);
         }
+        /// <summary>
+        /// Get a list of devices from Zenoss
+        /// </summary>
+        /// <param name="deviceClass">The class of the device</param>
+        /// <returns>a JSON object</returns>
         public static JObject get_devices(string deviceClass = "/zport/dmd/Devices")
         {
             string endpoint = "/zport/dmd/Devices";
@@ -119,6 +150,12 @@
 
             return JObject.Parse(router_request(endpoint, router, method, jData.ToString())) as JObject;
         }
+        /// <summary>
+        /// Return information about a specific device from Zenoss
+        /// </summary>
+        /// <param name="device_name">The name of the device</param>
+        /// <param name="deviceClass">The class of the device</param>
+        /// <returns>A JSON object</returns>
         public static JObject find_device(string device_name, string deviceClass = "/zport/dmd/Devices")
         {
             string endpoint = "/zport/dmd/Devices";
@@ -145,6 +182,13 @@
             zDevice["hash"] = hash;
             return zDevice;
         }
+        /// <summary>
+        /// Add a device to Zenoss
+        /// </summary>
+        /// <param name="device_name">The name of the device</param>
+        /// <param name="device_class">The class of the device</param>
+        /// <param name="collector">The name of the collector</param>
+        /// <returns>A JSON object</returns>
         public static JObject add_device(string device_name, string device_class = "/zport/dmd/Devices", string collector = "localhost")
         {
             string endpoint = "/zport/dmd/Devices";
@@ -161,7 +205,17 @@
 
             return JObject.Parse(router_request(endpoint, router, method, jData.ToString()));
         }
-        public static JObject create_event_on_device(string device, string severity, string summary, string evclass = "", string component = "", string evclasskey = "")
+        /// <summary>
+        /// Create an event on a specific device
+        /// </summary>
+        /// <param name="device_name">The name of the device</param>
+        /// <param name="severity">The severity of the event</param>
+        /// <param name="summary">A description of the event</param>
+        /// <param name="eventClass">The event class</param>
+        /// <param name="component">What component on the device created the event</param>
+        /// <param name="evclasskey"></param>
+        /// <returns>A JSON object</returns>
+        public static JObject create_event_on_device(string device_name, string severity, string summary, string eventClass = "", string component = "", string evclasskey = "")
         {
             string endpoint = "/zport/dmd/Devices";
             string router = "EventsRouter";
@@ -171,12 +225,12 @@
             if (sev.Any(severity.Contains))
             {
                 JObject jPayload = new JObject(
-                    new JProperty("device", device),
+                    new JProperty("device", device_name),
                     new JProperty("summary", summary),
                     new JProperty("severity", severity),
                     new JProperty("component", component),
                     new JProperty("evclasskey", evclasskey),
-                    new JProperty("evclass", evclass));
+                    new JProperty("evclass", eventClass));
                 JArray jData = new JArray();
                 jData.Add(jPayload);
 
@@ -187,6 +241,12 @@
                 return null;
             }
         }
+        /// <summary>
+        /// Remove a device from Zenoss
+        /// </summary>
+        /// <param name="device_name">The name of the device</param>
+        /// <param name="device_class">The class of the device</param>
+        /// <returns>A JSON object</returns>
         public static JObject remove_device(string device_name, string device_class)
         {
             string endpoint = "/zport/dmd/Devices";
@@ -207,6 +267,12 @@
 
             return JObject.Parse(router_request(endpoint, router, method, jData.ToString()));
         }
+        /// <summary>
+        /// Set the production state for a given device
+        /// </summary>
+        /// <param name="device_name">The name of the device</param>
+        /// <param name="prod_state">The production state</param>
+        /// <returns>A JSON object</returns>
         public static JObject set_prod_state(string device_name, int prod_state)
         {
             string endpoint = "/zport/dmd/Devices";
@@ -234,6 +300,14 @@
 
             return JObject.Parse(router_request(endpoint, router, method, jData.ToString()));
         }
+        /// <summary>
+        /// Get a list of events from Zenoss for a given device
+        /// </summary>
+        /// <param name="device_name">The name of the device</param>
+        /// <param name="limit">How many events to return</param>
+        /// <param name="component">What component on the device created the event</param>
+        /// <param name="eventClass">The event class</param>
+        /// <returns>A JSON object</returns>
         public static JObject get_events(string device_name = "", int limit = 100, string component = "", string eventClass = "")
         {
             string endpoint = "/zport/dmd/Events";

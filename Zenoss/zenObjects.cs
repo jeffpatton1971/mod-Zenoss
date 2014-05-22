@@ -1,7 +1,10 @@
 ﻿namespace Zenoss
 {
-    using System.Collections.Generic;
     using Newtonsoft.Json;
+    using System.Collections.Generic;
+    /// <summary>
+    /// A collection of json object for working with Zenoss
+    /// </summary>
     public class zenObjects
     {
         [JsonObject(MemberSerialization.OptIn)]
