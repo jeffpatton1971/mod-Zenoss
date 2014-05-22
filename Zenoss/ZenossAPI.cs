@@ -320,34 +320,11 @@
             JProperty jSeverity = new JProperty("severity", "[5,4,3,2]");
             JProperty jEventState = new JProperty("eventState", "[0,1]");
 
-            //JProperty jDevice = null;
-            //JProperty jComponent = null;
-            //JProperty jEventClass = null;
-
-            //if (device_name != "")
-            //{
-            //    jDevice = new JProperty("device", device_name);
-            //}
-
-            //if (component != "")
-            //{
-            //    jComponent = new JProperty("component", component);
-            //}
-
-            //if (eventClass != "")
-            //{
-            //    jEventClass = new JProperty("eventClass", eventClass);
-            //}
-
-
-            dynamic blah = new JArray();
-            blah.data = new JArray("start", 0);
-
-            JObject jPayload = new JObject(new JProperty("data", new JArray(
-                JArray.Parse(jStart.ToString()),
-                JArray.Parse(jLimit.ToString()),
-                JArray.Parse(jDir.ToString()),
-                JArray.Parse(jSort.ToString()))));
+            JObject jPayload = new JObject(
+                jStart,
+                jLimit,
+                jDir,
+                jSort);
             JArray jRequest = new JArray();
             jRequest.Add(jPayload);
 
