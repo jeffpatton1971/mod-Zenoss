@@ -1,4 +1,4 @@
-﻿namespace Zenoss
+﻿namespace mod_zenoss
 {
     using Newtonsoft.Json;
     using System.Collections.Generic;

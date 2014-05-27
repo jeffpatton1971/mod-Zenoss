@@ -7,7 +7,7 @@
     <ProjectGuid>{97658384-27A6-4755-B9AE-4534FBC48FBF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zenoss</RootNamespace>
+    <RootNamespace>mod_zenoss</RootNamespace>
     <AssemblyName>Zenoss</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
