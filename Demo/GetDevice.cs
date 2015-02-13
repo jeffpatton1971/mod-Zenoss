@@ -13,10 +13,18 @@
 
         private void cmdOk_Click(object sender, EventArgs e)
         {
-            NetworkCredential Credential = new NetworkCredential(Demo.znConfig.znUser, Demo.znConfig.znPass);
-            mod_zenoss.ZenossAPI.Connect(Credential, Demo.znConfig.ZenossUrl());
-            JObject Result = mod_zenoss.ZenossAPI.FindDevice(txtDevice.Text);
-            txtResult.Text = Result.ToString();
+            try
+            {
+                NetworkCredential Credential = new NetworkCredential(Demo.znConfig.znUser, Demo.znConfig.znPass);
+                mod_zenoss.ZenossAPI.Connect(Credential, Demo.znConfig.ZenossUrl());
+                JObject Result = mod_zenoss.ZenossAPI.FindDevice(txtDevice.Text);
+                txtResult.Text = Result.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
         }
     }
 }

@@ -27,6 +27,12 @@
             AddDevice addDevice = new AddDevice();
             addDevice.Visible = true;
         }
+
+        private void cmdDelDevice_Click(object sender, EventArgs e)
+        {
+            DelDevice delDevice = new DelDevice();
+            delDevice.Visible = true;
+        }
     }
     public static class znConfig
     {

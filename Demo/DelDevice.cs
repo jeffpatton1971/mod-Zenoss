@@ -1,13 +1,19 @@
 ﻿namespace Demo
 {
-    using Newtonsoft.Json.Linq;
     using System;
-    using System.Net;
-    using System.IO;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Data;
+    using System.Drawing;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
-    public partial class AddDevice : Form
+    using System.Net;
+    using Newtonsoft.Json.Linq;
+    public partial class DelDevice : Form
     {
-        public AddDevice()
+        public DelDevice()
         {
             InitializeComponent();
         }
@@ -16,17 +22,10 @@
         {
             try
             {
-                txtResult.Text = "";
-                JObject AddDevice = null;
                 NetworkCredential Credential = new NetworkCredential(Demo.znConfig.znUser, Demo.znConfig.znPass);
                 mod_zenoss.ZenossAPI.Connect(Credential, Demo.znConfig.ZenossUrl());
-                //
-                // Must have a valid DeviceClass in order to add
-                //
-                AddDevice = mod_zenoss.ZenossAPI.AddDevice(txtDeviceName.Text, cboDeviceClass.Text);
-                MessageBox.Show(AddDevice.ToString());
-                JObject jResult = mod_zenoss.ZenossAPI.FindDevice(txtDeviceName.Text);
-                txtResult.Text = jResult.ToString();
+                JObject Result = mod_zenoss.ZenossAPI.RemoveDevice(txtDeviceName.Text, cboDeviceClass.Text);
+                txtResult.Text = Result.ToString();
             }
             catch (Exception ex)
             {
@@ -35,7 +34,7 @@
             }
         }
 
-        private void AddDevice_Load(object sender, EventArgs e)
+        private void DelDevice_Load(object sender, EventArgs e)
         {
             try
             {

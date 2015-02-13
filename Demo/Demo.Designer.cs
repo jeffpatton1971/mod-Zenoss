@@ -34,6 +34,8 @@
             this.cmdGetDevice = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.cmdAddDevice = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cmdDelDevice = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -49,7 +51,7 @@
             // 
             this.cmdSetConfig.Location = new System.Drawing.Point(15, 25);
             this.cmdSetConfig.Name = "cmdSetConfig";
-            this.cmdSetConfig.Size = new System.Drawing.Size(75, 23);
+            this.cmdSetConfig.Size = new System.Drawing.Size(92, 23);
             this.cmdSetConfig.TabIndex = 1;
             this.cmdSetConfig.Text = "Set Config";
             this.cmdSetConfig.UseVisualStyleBackColor = true;
@@ -68,7 +70,7 @@
             // 
             this.cmdGetDevice.Location = new System.Drawing.Point(15, 76);
             this.cmdGetDevice.Name = "cmdGetDevice";
-            this.cmdGetDevice.Size = new System.Drawing.Size(75, 23);
+            this.cmdGetDevice.Size = new System.Drawing.Size(92, 23);
             this.cmdGetDevice.TabIndex = 3;
             this.cmdGetDevice.Text = "Get Device";
             this.cmdGetDevice.UseVisualStyleBackColor = true;
@@ -87,17 +89,38 @@
             // 
             this.cmdAddDevice.Location = new System.Drawing.Point(15, 129);
             this.cmdAddDevice.Name = "cmdAddDevice";
-            this.cmdAddDevice.Size = new System.Drawing.Size(75, 23);
+            this.cmdAddDevice.Size = new System.Drawing.Size(92, 23);
             this.cmdAddDevice.TabIndex = 5;
             this.cmdAddDevice.Text = "Add Device";
             this.cmdAddDevice.UseVisualStyleBackColor = true;
             this.cmdAddDevice.Click += new System.EventHandler(this.cmdAddDevice_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 165);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(152, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Remove a device from Zenoss";
+            // 
+            // cmdDelDevice
+            // 
+            this.cmdDelDevice.Location = new System.Drawing.Point(15, 181);
+            this.cmdDelDevice.Name = "cmdDelDevice";
+            this.cmdDelDevice.Size = new System.Drawing.Size(92, 23);
+            this.cmdDelDevice.TabIndex = 7;
+            this.cmdDelDevice.Text = "Remove Device";
+            this.cmdDelDevice.UseVisualStyleBackColor = true;
+            this.cmdDelDevice.Click += new System.EventHandler(this.cmdDelDevice_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.cmdDelDevice);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.cmdAddDevice);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cmdGetDevice);
@@ -122,6 +145,8 @@
         private System.Windows.Forms.Button cmdGetDevice;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button cmdAddDevice;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button cmdDelDevice;
     }
 }
 
