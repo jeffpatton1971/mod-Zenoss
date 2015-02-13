@@ -36,7 +36,8 @@
     }
     public static class znConfig
     {
-        public static string znUrl { get; set; }
+        public static string znServer { get; set; }
+        public static int znPort { get; set; }
         public static string znUser { get; set; }
         public static string znPass { get; set; }
         public static bool znSSL { get; set; }
@@ -44,11 +45,11 @@
         {
             if (znSSL == true)
             {
-                return "https://" + znUrl;
+                return "https://" + znServer + ":" + znPort;
             }
             else
             {
-                return "http://" + znUrl;
+                return "http://" + znServer + ":" + znPort;
             }
         }
     }

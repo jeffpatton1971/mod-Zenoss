@@ -19,7 +19,8 @@ namespace Demo
 
         private void cmdOk_Click(object sender, EventArgs e)
         {
-            Demo.znConfig.znUrl = txtUrl.Text;
+            Demo.znConfig.znServer = txtServer.Text;
+            Demo.znConfig.znPort = Convert.ToInt16(txtPort.Text);
             Demo.znConfig.znUser = txtUser.Text;
             Demo.znConfig.znPass = txtPass.Text;
             Demo.znConfig.znSSL = chkSSL.Checked;
@@ -28,7 +29,16 @@ namespace Demo
 
         private void SetConfig_Load(object sender, EventArgs e)
         {
-            txtUrl.Text = Demo.znConfig.znUrl;
+            txtServer.Text = Demo.znConfig.znServer;
+            if (Demo.znConfig.znPort == 0)
+            {
+                txtPort.Text = "80";
+            }
+            else
+            {
+                txtPort.Text = Demo.znConfig.znPort.ToString();
+            }
+            chkSSL.Checked = Demo.znConfig.znSSL;
             txtUser.Text = Demo.znConfig.znUser;
         }
     }
