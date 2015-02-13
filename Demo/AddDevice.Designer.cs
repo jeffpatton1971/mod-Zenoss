@@ -59,14 +59,14 @@
             this.txtDeviceName.Location = new System.Drawing.Point(90, 12);
             this.txtDeviceName.Name = "txtDeviceName";
             this.txtDeviceName.Size = new System.Drawing.Size(137, 20);
-            this.txtDeviceName.TabIndex = 2;
+            this.txtDeviceName.TabIndex = 0;
             // 
             // cmdOk
             // 
             this.cmdOk.Location = new System.Drawing.Point(152, 64);
             this.cmdOk.Name = "cmdOk";
             this.cmdOk.Size = new System.Drawing.Size(75, 23);
-            this.cmdOk.TabIndex = 4;
+            this.cmdOk.TabIndex = 2;
             this.cmdOk.Text = "Ok";
             this.cmdOk.UseVisualStyleBackColor = true;
             this.cmdOk.Click += new System.EventHandler(this.cmdOk_Click);
@@ -89,7 +89,7 @@
             this.cboDeviceClass.Location = new System.Drawing.Point(90, 37);
             this.cboDeviceClass.Name = "cboDeviceClass";
             this.cboDeviceClass.Size = new System.Drawing.Size(137, 21);
-            this.cboDeviceClass.TabIndex = 6;
+            this.cboDeviceClass.TabIndex = 1;
             // 
             // AddDevice
             // 
