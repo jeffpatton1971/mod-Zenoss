@@ -30,6 +30,10 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.cmdSetConfig = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cmdGetDevice = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cmdAddDevice = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -51,13 +55,58 @@
             this.cmdSetConfig.UseVisualStyleBackColor = true;
             this.cmdSetConfig.Click += new System.EventHandler(this.cmdSetConfig_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 60);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(129, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Get a device from Zenoss";
+            // 
+            // cmdGetDevice
+            // 
+            this.cmdGetDevice.Location = new System.Drawing.Point(15, 76);
+            this.cmdGetDevice.Name = "cmdGetDevice";
+            this.cmdGetDevice.Size = new System.Drawing.Size(75, 23);
+            this.cmdGetDevice.TabIndex = 3;
+            this.cmdGetDevice.Text = "Get Device";
+            this.cmdGetDevice.UseVisualStyleBackColor = true;
+            this.cmdGetDevice.Click += new System.EventHandler(this.cmdGetDevice_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 113);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(120, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Add a device to Zenoss";
+            // 
+            // cmdAddDevice
+            // 
+            this.cmdAddDevice.Location = new System.Drawing.Point(15, 129);
+            this.cmdAddDevice.Name = "cmdAddDevice";
+            this.cmdAddDevice.Size = new System.Drawing.Size(75, 23);
+            this.cmdAddDevice.TabIndex = 5;
+            this.cmdAddDevice.Text = "Add Device";
+            this.cmdAddDevice.UseVisualStyleBackColor = true;
+            this.cmdAddDevice.Click += new System.EventHandler(this.cmdAddDevice_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.cmdAddDevice);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.cmdGetDevice);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.cmdSetConfig);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmMain";
             this.Text = "Zenoss Demo";
             this.ResumeLayout(false);
@@ -69,6 +118,10 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button cmdSetConfig;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button cmdGetDevice;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button cmdAddDevice;
     }
 }
 

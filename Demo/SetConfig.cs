@@ -22,8 +22,14 @@ namespace Demo
             Demo.znConfig.znUrl = txtUrl.Text;
             Demo.znConfig.znUser = txtUser.Text;
             Demo.znConfig.znPass = txtPass.Text;
-
+            Demo.znConfig.znSSL = chkSSL.Checked;
             this.Close();
+        }
+
+        private void SetConfig_Load(object sender, EventArgs e)
+        {
+            txtUrl.Text = Demo.znConfig.znUrl;
+            txtUser.Text = Demo.znConfig.znUser;
         }
     }
 }

@@ -113,6 +113,19 @@
 
             return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString())) as JObject;
         }
+        public static JObject GetTree(string id)
+        {
+            string endpoint = "/zport/dmd/Devices";
+            string router = "DeviceRouter";
+            string method = "getTree";
+
+            JObject jPayload = new JObject(
+                new JProperty("id", id));
+            JArray jData = new JArray();
+            jData.Add(jPayload);
+
+            return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString())) as JObject;
+        }
         /// <summary>
         /// Return information about a specific device from Zenoss
         /// </summary>
