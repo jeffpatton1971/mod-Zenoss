@@ -42,21 +42,28 @@
         /// <param name="zenServer">A string containing the name of the server to auth to</param>
         public static void Connect(NetworkCredential Credential, string zenServer)
         {
-            string authPath = "/zport/acl_users/cookieAuthHelper/login";
-            string came_from = "/zport/dmd/";
-            string username = Credential.UserName;
-            string password = Credential.Password;
-            ZenossAPI.host = zenServer;
-            ZenossAPI.req_count = ZenossAPI.req_count + 1;
+            try
+            {
+                string authPath = "/zport/acl_users/cookieAuthHelper/login";
+                string came_from = "/zport/dmd/";
+                string username = Credential.UserName;
+                string password = Credential.Password;
+                ZenossAPI.host = zenServer;
+                ZenossAPI.req_count = ZenossAPI.req_count + 1;
 
-            NameValueCollection login_params = new NameValueCollection { 
+                NameValueCollection login_params = new NameValueCollection { 
                 {"__ac_name",username},
                 {"__ac_password",password},
                 {"submitted","true"},
                 {"came_from",host+came_from}
             };
 
-            client.UploadValues(host + authPath, "POST", login_params);
+                client.UploadValues(host + authPath, "POST", login_params);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         /// <summary>
         /// This function builds the actual URL and connection to retrieve data from
@@ -69,30 +76,37 @@
         /// <returns>A JSON string</returns>
         public static string RouterRequest(string endpoint, string router, string method, string data = null)
         {
-            Hashtable routerLookup = GetRouters();
-            string RouterValue = (string)routerLookup[router];
+            try
+            {
+                Hashtable routerLookup = GetRouters();
+                string RouterValue = (string)routerLookup[router];
 
-            string apiUrl = host + endpoint + "/" + RouterValue + "_router";
+                string apiUrl = host + endpoint + "/" + RouterValue + "_router";
 
-            ZenossAPI.client.Headers["Content-type"] = "application/json";
-            ZenossAPI.client.Headers["charset"] = "utf-8";
+                ZenossAPI.client.Headers["Content-type"] = "application/json";
+                ZenossAPI.client.Headers["charset"] = "utf-8";
 
-            int tid = ZenossAPI.req_count;
+                int tid = ZenossAPI.req_count;
 
-            JObject jPayload = new JObject(
-                new JProperty("action", router),
-                new JProperty("method", method),
-                new JProperty("data", new JArray(
-                    JArray.Parse(data))),
-                new JProperty("type", "rpc"),
-                new JProperty("tid", tid));
-            JArray jPost = new JArray();
-            jPost.Add(jPayload);
+                JObject jPayload = new JObject(
+                    new JProperty("action", router),
+                    new JProperty("method", method),
+                    new JProperty("data", new JArray(
+                        JArray.Parse(data))),
+                    new JProperty("type", "rpc"),
+                    new JProperty("tid", tid));
+                JArray jPost = new JArray();
+                jPost.Add(jPayload);
 
-            ZenossAPI.req_count = ZenossAPI.req_count + 1;
+                ZenossAPI.req_count = ZenossAPI.req_count + 1;
 
-            byte[] restReturn = client.UploadData(apiUrl, Encoding.Default.GetBytes(jPost.ToString()));
-            return Encoding.ASCII.GetString(restReturn);
+                byte[] restReturn = client.UploadData(apiUrl, Encoding.Default.GetBytes(jPost.ToString()));
+                return Encoding.ASCII.GetString(restReturn);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         /// <summary>
         /// Get a list of devices from Zenoss
@@ -101,30 +115,44 @@
         /// <returns>a JSON object</returns>
         public static JObject GetDevices(string deviceClass = "/zport/dmd/Devices")
         {
-            string endpoint = "/zport/dmd/Devices";
-            string router = "DeviceRouter";
-            string method = "getDevices";
+            try
+            {
+                string endpoint = "/zport/dmd/Devices";
+                string router = "DeviceRouter";
+                string method = "getDevices";
 
-            JObject jPayload = new JObject(
-                new JProperty("uid", deviceClass),
-                new JProperty("params", "{}"));
-            JArray jData = new JArray();
-            jData.Add(jPayload);
+                JObject jPayload = new JObject(
+                    new JProperty("uid", deviceClass),
+                    new JProperty("params", "{}"));
+                JArray jData = new JArray();
+                jData.Add(jPayload);
 
-            return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString())) as JObject;
+                return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString())) as JObject;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public static JObject GetTree(string id)
         {
-            string endpoint = "/zport/dmd/Devices";
-            string router = "DeviceRouter";
-            string method = "getTree";
+            try
+            {
+                string endpoint = "/zport/dmd/Devices";
+                string router = "DeviceRouter";
+                string method = "getTree";
 
-            JObject jPayload = new JObject(
-                new JProperty("id", id));
-            JArray jData = new JArray();
-            jData.Add(jPayload);
+                JObject jPayload = new JObject(
+                    new JProperty("id", id));
+                JArray jData = new JArray();
+                jData.Add(jPayload);
 
-            return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString())) as JObject;
+                return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString())) as JObject;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         /// <summary>
         /// Return information about a specific device from Zenoss
@@ -134,29 +162,36 @@
         /// <returns>A JSON object</returns>
         public static JObject FindDevice(string device_name, string deviceClass = "/zport/dmd/Devices")
         {
-            string endpoint = "/zport/dmd/Devices";
-            string router = "DeviceRouter";
-            string method = "getDevices";
+            try
+            {
+                string endpoint = "/zport/dmd/Devices";
+                string router = "DeviceRouter";
+                string method = "getDevices";
 
-            JObject jPayload = new JObject(
-                new JProperty("uid", deviceClass),
-                new JProperty("params", "{}"));
-            JArray jData = new JArray();
-            jData.Add(jPayload);
+                JObject jPayload = new JObject(
+                    new JProperty("uid", deviceClass),
+                    new JProperty("params", "{}"));
+                JArray jData = new JArray();
+                jData.Add(jPayload);
 
-            JObject jReturn = JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString()))["result"] as JObject;
-            string hash = jReturn["hash"].ToString();
+                JObject jReturn = JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString()))["result"] as JObject;
+                string hash = jReturn["hash"].ToString();
 
-            jPayload.RemoveAll();
-            jPayload = new JObject(
-                new JProperty("uid", deviceClass),
-                new JProperty("params",
-                    new JObject(new JProperty("name", device_name))));
-            jData.ReplaceAll(jPayload);
+                jPayload.RemoveAll();
+                jPayload = new JObject(
+                    new JProperty("uid", deviceClass),
+                    new JProperty("params",
+                        new JObject(new JProperty("name", device_name))));
+                jData.ReplaceAll(jPayload);
 
-            JObject zDevice = JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString()))["result"] as JObject;
-            zDevice["hash"] = hash;
-            return zDevice;
+                JObject zDevice = JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString()))["result"] as JObject;
+                zDevice["hash"] = hash;
+                return zDevice;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         /// <summary>
         /// Add a device to Zenoss
@@ -167,19 +202,26 @@
         /// <returns>A JSON object</returns>
         public static JObject AddDevice(string device_name, string device_class = "/zport/dmd/Devices", string collector = "localhost")
         {
-            string endpoint = "/zport/dmd/Devices";
-            string router = "DeviceRouter";
-            string method = "addDevice";
+            try
+            {
+                string endpoint = "/zport/dmd/Devices";
+                string router = "DeviceRouter";
+                string method = "addDevice";
 
-            JObject jPayload = new JObject(
-                new JProperty("deviceName", device_name),
-                new JProperty("deviceClass", device_class),
-                new JProperty("model", "True"),
-                new JProperty("collector", collector));
-            JArray jData = new JArray();
-            jData.Add(jPayload);
+                JObject jPayload = new JObject(
+                    new JProperty("deviceName", device_name),
+                    new JProperty("deviceClass", device_class),
+                    new JProperty("model", "True"),
+                    new JProperty("collector", collector));
+                JArray jData = new JArray();
+                jData.Add(jPayload);
 
-            return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString()));
+                return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString()));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         /// <summary>
         /// Create an event on a specific device
@@ -193,28 +235,35 @@
         /// <returns>A JSON object</returns>
         public static JObject CreateEvent(string device_name, string severity, string summary, string eventClass = "", string component = "", string evclasskey = "")
         {
-            string endpoint = "/zport/dmd/Devices";
-            string router = "EventsRouter";
-            string method = "add_event";
-
-            string[] sev = { "Critical", "Error", "Warning", "Info", "Debug", "Clear" };
-            if (sev.Any(severity.Contains))
+            try
             {
-                JObject jPayload = new JObject(
-                    new JProperty("device", device_name),
-                    new JProperty("summary", summary),
-                    new JProperty("severity", severity),
-                    new JProperty("component", component),
-                    new JProperty("evclasskey", evclasskey),
-                    new JProperty("evclass", eventClass));
-                JArray jData = new JArray();
-                jData.Add(jPayload);
+                string endpoint = "/zport/dmd/Devices";
+                string router = "EventsRouter";
+                string method = "add_event";
 
-                return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString()));
+                string[] sev = { "Critical", "Error", "Warning", "Info", "Debug", "Clear" };
+                if (sev.Any(severity.Contains))
+                {
+                    JObject jPayload = new JObject(
+                        new JProperty("device", device_name),
+                        new JProperty("summary", summary),
+                        new JProperty("severity", severity),
+                        new JProperty("component", component),
+                        new JProperty("evclasskey", evclasskey),
+                        new JProperty("evclass", eventClass));
+                    JArray jData = new JArray();
+                    jData.Add(jPayload);
+
+                    return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString()));
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
         }
         /// <summary>
@@ -225,23 +274,30 @@
         /// <returns>A JSON object</returns>
         public static JObject RemoveDevice(string device_name, string device_class)
         {
-            string endpoint = "/zport/dmd/Devices";
-            string router = "DeviceRouter";
-            string method = "removeDevices";
+            try
+            {
+                string endpoint = "/zport/dmd/Devices";
+                string router = "DeviceRouter";
+                string method = "removeDevices";
 
-            JToken device = FindDevice(device_name)["devices"][0];
-            string uid = (string)device["uid"];
-            string hash = (string)device["hash"];
+                JToken device = FindDevice(device_name)["devices"][0];
+                string uid = (string)device["uid"];
+                string hash = (string)device["hash"];
 
-            JObject jPayload = new JObject(
-                new JProperty("uids",
-                    new JArray(uid)),
-                new JProperty("hashcheck", hash),
-                new JProperty("action", "delete"));
-            JArray jData = new JArray();
-            jData.Add(jPayload);
+                JObject jPayload = new JObject(
+                    new JProperty("uids",
+                        new JArray(uid)),
+                    new JProperty("hashcheck", hash),
+                    new JProperty("action", "delete"));
+                JArray jData = new JArray();
+                jData.Add(jPayload);
 
-            return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString()));
+                return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString()));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         /// <summary>
         /// Set the production state for a given device
@@ -251,30 +307,37 @@
         /// <returns>A JSON object</returns>
         public static JObject SetProductionState(string device_name, int prod_state)
         {
-            string endpoint = "/zport/dmd/Devices";
-            string router = "DeviceRouter";
-            string method = "setProductionState";
+            try
+            {
+                string endpoint = "/zport/dmd/Devices";
+                string router = "DeviceRouter";
+                string method = "setProductionState";
 
-            JToken device = FindDevice(device_name)["devices"][0];
-            string uid = (string)device["uid"];
-            string hash = (string)device["hash"];
+                JToken device = FindDevice(device_name)["devices"][0];
+                string uid = (string)device["uid"];
+                string hash = (string)device["hash"];
 
-            //
-            // prodState -1 = Decommissioned
-            // prodState 300 = Maintenance
-            // prodState 500 = Pre-Production
-            // prodState 1000 = Production
-            // 
+                //
+                // prodState -1 = Decommissioned
+                // prodState 300 = Maintenance
+                // prodState 500 = Pre-Production
+                // prodState 1000 = Production
+                // 
 
-            JObject jPayload = new JObject(
-                new JProperty("uids",
-                    new JArray(uid)),
-                new JProperty("hashcheck", hash),
-                new JProperty("prodState", prod_state));
-            JArray jData = new JArray();
-            jData.Add(jPayload);
+                JObject jPayload = new JObject(
+                    new JProperty("uids",
+                        new JArray(uid)),
+                    new JProperty("hashcheck", hash),
+                    new JProperty("prodState", prod_state));
+                JArray jData = new JArray();
+                jData.Add(jPayload);
 
-            return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString()));
+                return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString()));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         /// <summary>
         /// Get a list of events from Zenoss for a given device
@@ -288,43 +351,50 @@
         /// <returns>A JSON object</returns>
         public static JObject GetEvents(string device_name = "", int limit = 100, string component = "", string eventClass = "", string severity = "", string eventState = "")
         {
-            string endpoint = "/zport/dmd/Events";
-            string router = "EventsRouter";
-            string method = "query";
+            try
+            {
+                string endpoint = "/zport/dmd/Events";
+                string router = "EventsRouter";
+                string method = "query";
 
-            JProperty jStart = new JProperty("start", 0);
-            JProperty jLimit = new JProperty("limit", limit);
-            JProperty jDir = new JProperty("dir", "DESC");
-            JProperty jSort = new JProperty("sort", "severity");
+                JProperty jStart = new JProperty("start", 0);
+                JProperty jLimit = new JProperty("limit", limit);
+                JProperty jDir = new JProperty("dir", "DESC");
+                JProperty jSort = new JProperty("sort", "severity");
 
-            JProperty jSeverity = new JProperty("severity", severity);
-            JProperty jEventState = new JProperty("eventState", eventState);
+                JProperty jSeverity = new JProperty("severity", severity);
+                JProperty jEventState = new JProperty("eventState", eventState);
 
-            JObject jPayload = new JObject(
-                jStart,
-                jLimit,
-                jDir,
-                jSort,
-                new JProperty("params", new JObject(
-                    jSeverity,
-                    jEventState)),
-                new JProperty("keys", new JArray(
-                    "eventState",
-                    "severity",
-                    "device",
-                    "component",
-                    "eventClass",
-                    "summary",
-                    "firstTime",
-                    "lastTime",
-                    "count",
-                    "evid",
-                    "eventClassKey",
-                    "message")));
-            JArray jRequest = new JArray();
-            jRequest.Add(jPayload);
+                JObject jPayload = new JObject(
+                    jStart,
+                    jLimit,
+                    jDir,
+                    jSort,
+                    new JProperty("params", new JObject(
+                        jSeverity,
+                        jEventState)),
+                    new JProperty("keys", new JArray(
+                        "eventState",
+                        "severity",
+                        "device",
+                        "component",
+                        "eventClass",
+                        "summary",
+                        "firstTime",
+                        "lastTime",
+                        "count",
+                        "evid",
+                        "eventClassKey",
+                        "message")));
+                JArray jRequest = new JArray();
+                jRequest.Add(jPayload);
 
-            return JObject.Parse(RouterRequest(endpoint, router, method, jRequest.ToString()))["result"] as JObject;
+                return JObject.Parse(RouterRequest(endpoint, router, method, jRequest.ToString()))["result"] as JObject;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         /// <summary>
         /// Extend the WebClient class to accept cookies
