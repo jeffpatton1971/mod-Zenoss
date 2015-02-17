@@ -45,7 +45,7 @@
         {
             if (znSSL == true)
             {
-                return "https://" + znServer + ":" + znPort;
+                return "https://" + znServer;
             }
             else
             {
