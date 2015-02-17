@@ -25,6 +25,7 @@
             routerTable.Add("EventsRouter", "evconsole");
             routerTable.Add("ProcessRouter", "process");
             routerTable.Add("ServiceRouter", "service");
+            routerTable.Add("SettingsRouter", "settings");
             routerTable.Add("DeviceRouter", "device");
             routerTable.Add("NetworkRouter", "network");
             routerTable.Add("TemplateRouter", "template");
@@ -134,12 +135,12 @@
                 throw ex;
             }
         }
-        public static JObject GetTree(string id)
+        public static JObject GetTree(string id, string router, string endpoint)
         {
             try
             {
-                string endpoint = "/zport/dmd/Devices";
-                string router = "DeviceRouter";
+                //string endpoint = "/zport/dmd/Devices";
+                //string router = "DeviceRouter";
                 string method = "getTree";
 
                 JObject jPayload = new JObject(
@@ -422,6 +423,7 @@
             public const string EventsRouter = "evconsole";
             public const string ProcessRouter = "process";
             public const string ServiceRouter = "service";
+            public const string SettingsRouter = "settings";
             public const string DeviceRouter = "device";
             public const string NetworkRouter = "network";
             public const string TemplateRouter = "template";
