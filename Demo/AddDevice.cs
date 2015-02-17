@@ -20,7 +20,7 @@
                 JObject AddDevice = null;
                 NetworkCredential Credential = new NetworkCredential(Demo.znConfig.znUser, Demo.znConfig.znPass);
                 mod_zenoss.ZenossAPI.Connect(Credential, Demo.znConfig.ZenossUrl());
-                AddDevice = mod_zenoss.ZenossAPI.AddDevice(txtDeviceName.Text, cboGroups.Text, cboDeviceClass.Text);
+                AddDevice = mod_zenoss.ZenossAPI.AddDevice(txtDeviceName.Text, lstGroups.SelectedItems, cboDeviceClass.Text);
                 MessageBox.Show(AddDevice.ToString());
                 JObject jResult = mod_zenoss.ZenossAPI.FindDevice(txtDeviceName.Text);
                 txtResult.Text = jResult.ToString();
@@ -59,7 +59,7 @@
                         string[] temp = line.Trim().Split(new char[] { ' ' });
                         string groupName = temp[1];
                         groupName = groupName.Replace("\"", "");
-                        cboGroups.Items.Add(groupName.Trim());
+                        lstGroups.Items.Add(groupName.Trim());
                     }
                 }
             }

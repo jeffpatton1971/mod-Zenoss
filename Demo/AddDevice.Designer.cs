@@ -35,7 +35,7 @@
             this.txtResult = new System.Windows.Forms.TextBox();
             this.cboDeviceClass = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.cboGroups = new System.Windows.Forms.ComboBox();
+            this.lstGroups = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // label1
@@ -65,7 +65,7 @@
             // 
             // cmdOk
             // 
-            this.cmdOk.Location = new System.Drawing.Point(152, 91);
+            this.cmdOk.Location = new System.Drawing.Point(152, 175);
             this.cmdOk.Name = "cmdOk";
             this.cmdOk.Size = new System.Drawing.Size(75, 23);
             this.cmdOk.TabIndex = 3;
@@ -75,7 +75,7 @@
             // 
             // txtResult
             // 
-            this.txtResult.Location = new System.Drawing.Point(15, 120);
+            this.txtResult.Location = new System.Drawing.Point(15, 204);
             this.txtResult.Multiline = true;
             this.txtResult.Name = "txtResult";
             this.txtResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -102,22 +102,21 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Group";
             // 
-            // cboGroups
+            // lstGroups
             // 
-            this.cboGroups.DropDownWidth = 255;
-            this.cboGroups.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.cboGroups.FormattingEnabled = true;
-            this.cboGroups.Location = new System.Drawing.Point(90, 64);
-            this.cboGroups.Name = "cboGroups";
-            this.cboGroups.Size = new System.Drawing.Size(137, 21);
-            this.cboGroups.TabIndex = 2;
+            this.lstGroups.FormattingEnabled = true;
+            this.lstGroups.Location = new System.Drawing.Point(15, 87);
+            this.lstGroups.Name = "lstGroups";
+            this.lstGroups.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.lstGroups.Size = new System.Drawing.Size(212, 82);
+            this.lstGroups.TabIndex = 2;
             // 
             // AddDevice
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(239, 307);
-            this.Controls.Add(this.cboGroups);
+            this.ClientSize = new System.Drawing.Size(239, 396);
+            this.Controls.Add(this.lstGroups);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cboDeviceClass);
             this.Controls.Add(this.txtResult);
@@ -146,6 +145,6 @@
         private System.Windows.Forms.TextBox txtResult;
         private System.Windows.Forms.ComboBox cboDeviceClass;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cboGroups;
+        private System.Windows.Forms.ListBox lstGroups;
     }
 }
