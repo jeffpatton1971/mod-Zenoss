@@ -40,7 +40,7 @@
             {
                 NetworkCredential Credential = new NetworkCredential(Demo.znConfig.znUser, Demo.znConfig.znPass);
                 mod_zenoss.ZenossAPI.Connect(Credential, Demo.znConfig.ZenossUrl());
-                string Result = (mod_zenoss.ZenossAPI.GetTree("/zport/dmd/Devices", "DeviceRouter", "/zport/dmd/Devices")).ToString();
+                string Result = (mod_zenoss.ZenossAPI.RunMethod("/zport/dmd/Devices", "DeviceRouter", "/zport/dmd/Devices", "getTree")).ToString();
                 foreach (var line in Result.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     if (line.Contains("\"uid\""))

@@ -41,9 +41,9 @@
             {
                 NetworkCredential Credential = new NetworkCredential(Demo.znConfig.znUser, Demo.znConfig.znPass);
                 mod_zenoss.ZenossAPI.Connect(Credential, Demo.znConfig.ZenossUrl());
-                string Result = (mod_zenoss.ZenossAPI.GetTree("/zport/dmd/Devices", "DeviceRouter", "/zport/dmd/Devices")).ToString();
-                string settingsResult = (mod_zenoss.ZenossAPI.GetTree("/zport/dmd/UserInterfaceSettings", "SettingsRouter", "/zport/dmd/UserInterfaceSettings")).ToString();
-                Console.WriteLine(settingsResult);
+                string Result = (mod_zenoss.ZenossAPI.RunMethod("/zport/dmd/Devices", "DeviceRouter", "/zport/dmd/Devices", "getTree")).ToString();
+                string Groups = (mod_zenoss.ZenossAPI.RunMethod("/zport/dmd/Devices", "DeviceRouter", "/zport/dmd/Devices", "getGroups")).ToString();
+                Console.WriteLine(Groups);
                 foreach (var line in Result.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     if (line.Contains("\"uid\""))
@@ -53,6 +53,16 @@
                         deviceClass = (deviceClass.Replace("\"", "")).Replace("/zport/dmd/Devices", "");
                         deviceClass = deviceClass.Substring(0, deviceClass.Length - 1);
                         cboDeviceClass.Items.Add(deviceClass.Trim());
+                    }
+                }
+                foreach (var line in Groups.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    if (line.Contains("\"name\":"))
+                    {
+                        string[] temp = line.Trim().Split(new char[] { ' ' });
+                        string groupName = temp[1];
+                        groupName = groupName.Replace("\"", "");
+                        cboGroups.Items.Add(groupName.Trim());
                     }
                 }
             }
