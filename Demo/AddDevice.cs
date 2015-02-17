@@ -20,10 +20,7 @@
                 JObject AddDevice = null;
                 NetworkCredential Credential = new NetworkCredential(Demo.znConfig.znUser, Demo.znConfig.znPass);
                 mod_zenoss.ZenossAPI.Connect(Credential, Demo.znConfig.ZenossUrl());
-                //
-                // Must have a valid DeviceClass in order to add
-                //
-                AddDevice = mod_zenoss.ZenossAPI.AddDevice(txtDeviceName.Text, cboDeviceClass.Text);
+                AddDevice = mod_zenoss.ZenossAPI.AddDevice(txtDeviceName.Text, cboGroups.Text, cboDeviceClass.Text);
                 MessageBox.Show(AddDevice.ToString());
                 JObject jResult = mod_zenoss.ZenossAPI.FindDevice(txtDeviceName.Text);
                 txtResult.Text = jResult.ToString();
