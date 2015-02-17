@@ -85,7 +85,6 @@
             this.Name = "GetDevice";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Get Device From Zenoss";
-            this.Load += new System.EventHandler(this.GetDevice_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

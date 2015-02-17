@@ -17,7 +17,15 @@
             {
                 NetworkCredential Credential = new NetworkCredential(Demo.znConfig.znUser, Demo.znConfig.znPass);
                 mod_zenoss.ZenossAPI.Connect(Credential, Demo.znConfig.ZenossUrl());
-                JObject Result = mod_zenoss.ZenossAPI.FindDevice(txtDevice.Text);
+                JObject Result = null;
+                if (txtDevice.Text == "")
+                {
+                    Result = mod_zenoss.ZenossAPI.GetDevices();
+                }
+                else
+                {
+                    Result = mod_zenoss.ZenossAPI.FindDevice(txtDevice.Text);
+                }
                 txtResult.Text = Result.ToString();
             }
             catch (Exception ex)
@@ -25,14 +33,6 @@
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
             }
-        }
-
-        private void GetDevice_Load(object sender, EventArgs e)
-        {
-            //NetworkCredential Credential = new NetworkCredential(Demo.znConfig.znUser, Demo.znConfig.znPass);
-            //mod_zenoss.ZenossAPI.Connect(Credential, Demo.znConfig.ZenossUrl());
-            //JObject Result = mod_zenoss.ZenossAPI.RunMethod("/Server/Windows/WMI/QA Home", "DeviceRouter", "/zport/dmd/Devices", "getDevices");
-            //Console.WriteLine(Result.ToString());
         }
     }
 }
