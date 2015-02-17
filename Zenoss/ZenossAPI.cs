@@ -206,7 +206,7 @@
         /// <param name="device_class">The class of the device</param>
         /// <param name="collector">The name of the collector</param>
         /// <returns>A JSON object</returns>
-        public static JObject AddDevice(string device_name, string GroupPath, string device_class = "/zport/dmd/Devices", string collector = "localhost")
+        public static JObject AddDevice(string device_name, IList GroupPath, string device_class = "/zport/dmd/Devices", string collector = "localhost")
         {
             try
             {
