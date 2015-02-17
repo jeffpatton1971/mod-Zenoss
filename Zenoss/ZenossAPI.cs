@@ -206,7 +206,7 @@
         /// <param name="device_class">The class of the device</param>
         /// <param name="collector">The name of the collector</param>
         /// <returns>A JSON object</returns>
-        public static JObject AddDevice(string device_name, string device_class = "/zport/dmd/Devices", string collector = "localhost")
+        public static JObject AddDevice(string device_name, string GroupPath, string device_class = "/zport/dmd/Devices", string collector = "localhost")
         {
             try
             {
@@ -218,7 +218,9 @@
                     new JProperty("deviceName", device_name),
                     new JProperty("deviceClass", device_class),
                     new JProperty("model", "True"),
-                    new JProperty("collector", collector));
+                    new JProperty("collector", collector),
+                    new JProperty("groupPaths",
+                        new JArray(GroupPath)));
                 JArray jData = new JArray();
                 jData.Add(jPayload);
 
