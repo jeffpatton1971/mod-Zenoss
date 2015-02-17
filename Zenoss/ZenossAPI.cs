@@ -135,14 +135,18 @@
                 throw ex;
             }
         }
-        public static JObject GetTree(string id, string router, string endpoint)
+        /// <summary>
+        /// This is a generic function which can handle most of the methods provided by various Routers
+        /// </summary>
+        /// <param name="id">The ID</param>
+        /// <param name="router">Which router to use</param>
+        /// <param name="endpoint">Which endpoint to use</param>
+        /// <param name="method">What method to call</param>
+        /// <returns>A JSON object containing the data requested</returns>
+        public static JObject RunMethod(string id, string router, string endpoint, string method)
         {
             try
             {
-                //string endpoint = "/zport/dmd/Devices";
-                //string router = "DeviceRouter";
-                string method = "getTree";
-
                 JObject jPayload = new JObject(
                     new JProperty("id", id));
                 JArray jData = new JArray();
@@ -155,6 +159,7 @@
                 throw ex;
             }
         }
+
         /// <summary>
         /// Return information about a specific device from Zenoss
         /// </summary>
