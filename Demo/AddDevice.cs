@@ -56,7 +56,7 @@
                 {
                     if (line.Contains("\"name\":"))
                     {
-                        string[] temp = line.Trim().Split(new char[] { ' ' });
+                        string[] temp = line.Trim().Split(new char[] { ':' });
                         string groupName = temp[1];
                         groupName = groupName.Replace("\"", "");
                         lstGroups.Items.Add(groupName.Trim());
