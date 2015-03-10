@@ -176,6 +176,19 @@
                             jPayload = PayLoad;
                         }
                         break;
+                    case "removeDevices" :
+                        //
+                        //
+                        //
+                        if (PayLoad == null)
+                        {
+
+                        }
+                        else
+                        {
+                            jPayload = PayLoad;
+                        }
+                        break;
                 }
                 jData.Add(jPayload);
 
@@ -318,19 +331,19 @@
                 string router = "DeviceRouter";
                 string method = "removeDevices";
 
-                JToken device = FindDevice(device_name)["devices"][0];
-                string uid = (string)device["uid"];
-                string hash = (string)device["hash"];
+                JObject device = JObject.Parse(FindDevice(device_name).ToString());
+                JToken result = device["result"];
+                zenObjects.zenDevice zd = (result["devices"][0]).ToObject<zenObjects.zenDevice>();
+                string uid = zd.uid;
+                string hash = (string)result["hash"];
 
                 JObject jPayload = new JObject(
                     new JProperty("uids",
                         new JArray(uid)),
                     new JProperty("hashcheck", hash),
                     new JProperty("action", "delete"));
-                JArray jData = new JArray();
-                jData.Add(jPayload);
 
-                return JObject.Parse(RouterRequest(endpoint, router, method, jData.ToString()));
+                return RunMethod(uid, router, endpoint, method, jPayload);
             }
             catch (Exception ex)
             {
