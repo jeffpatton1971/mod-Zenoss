@@ -365,7 +365,7 @@
                 string method = "setProductionState";
                 int prod_state = 0;
 
-                JToken device = FindDevice(device_name)["devices"][0];
+                JToken device = FindDevice(device_name);
                 string uid = (string)device["uid"];
                 string hash = (string)device["hash"];
 
